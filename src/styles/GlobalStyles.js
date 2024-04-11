@@ -18,10 +18,10 @@ const GlobalStyles = createGlobalStyle`
   --color-grey-800: #1f2937;
   --color-grey-900: #111827;
 
-  --color-blue-100: #e0f2fe;
-  --color-blue-700: #0369a1;
-  --color-green-100: #dcfce7;
-  --color-green-700: #15803d;
+  --color-blue-100: #aadff1;
+  --color-blue-700: #29abe2;
+  --color-green-100: #8dce6e;
+  --color-green-700: ##39b54a;
   --color-yellow-100: #fef9c3;
   --color-yellow-700: #a16207;
   --color-silver-100: #e5e7eb;
@@ -57,10 +57,10 @@ const GlobalStyles = createGlobalStyle`
   --color-grey-800: #f3f4f6;
   --color-grey-900: #f9fafb;
 
-  --color-blue-100: #075985;
-  --color-blue-700: #e0f2fe;
-  --color-green-100: #166534;
-  --color-green-700: #dcfce7;
+  --color-blue-100: #aadff1;
+  --color-blue-700: #29abe2;
+  --color-green-100: #8dce6e;
+  --color-green-700: ##39b54a;
   --color-yellow-100: #854d0e;
   --color-yellow-700: #fef9c3;
   --color-silver-100: #374151;
@@ -89,7 +89,7 @@ const GlobalStyles = createGlobalStyle`
 --color-brand-500: #6366f1;
 --color-brand-600: #4f46e5;
 --color-brand-700: #4338ca;
---color-brand-800: #3730a3;
+--color-brand-800: #005f94;
 
 
 --border-radius-tiny: 3px;
@@ -117,7 +117,7 @@ font-size: 62.5%;
 }
 
 body {
-font-family: "Poppins", sans-serif;
+  font-family: "Quicksand", sans-serif;
 color: var(--color-grey-700);
 
 transition: color 0.3s, background-color 0.3s;
