@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import styled from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
 
 import Heading from './ui/Heading';
 import Logo from './ui/Logo';
+import Row from './ui/Row';
 
 const Main = styled.main`
   display: flex;
@@ -23,14 +25,15 @@ function App() {
     <>
       <GlobalStyles />
       <Main>
-        <Logo />
-        <Heading as="h1">dripWater</Heading>
-        <Heading as="h2">
-          gathering data <Span>some</Span> drips at a time
-        </Heading>
-        <Heading as="h3">heading 3</Heading>
-        <Heading as="h4">realy hdeaing 4</Heading>
-        <Heading as="h5">no 5 just yet</Heading>
+        <Row type="vertical">
+          <div>
+            <Logo />
+            <Heading as="h1">dripWater</Heading>
+          </div>
+          <Heading as="h2">
+            gathering data <Span>some</Span> drips at a time
+          </Heading>
+        </Row>
       </Main>
     </>
   );
