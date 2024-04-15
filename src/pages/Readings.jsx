@@ -1,18 +1,16 @@
-import { useEffect } from 'react';
-import { getReadings } from '../services/apiReadings';
-
+import ReadingsTable from '../features/readings/ReadingsTable';
 import Heading from '../ui/Heading';
 import Row from '../ui/Row';
 
 function Readings() {
-  useEffect(function () {
-    getReadings().then((readings) => console.log(readings));
-  }, []);
-
   return (
     <>
       <Row type="horizontal">
         <Heading as="h1">Readings</Heading>
+        <p>filter sort</p>
+      </Row>
+      <Row>
+        <ReadingsTable />
       </Row>
     </>
   );
