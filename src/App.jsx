@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
 import styled from 'styled-components';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import GlobalStyles from './styles/GlobalStyles';
 
-import Heading from './ui/Heading';
-import Logo from './ui/Logo';
-import Row from './ui/Row';
 import Dashboard from './pages/Dashboard';
 import Household from './pages/Household';
 import Login from './pages/Login';
@@ -16,6 +15,14 @@ import Users from './pages/Users';
 
 import PageNotFound from './pages/PageNotFound';
 import AppLayout from './ui/AppLayout';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});
 
 const Main = styled.main`
   display: flex;
@@ -33,7 +40,8 @@ const Span = styled.span`
 
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
@@ -52,21 +60,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
-    // <>
-    //   <GlobalStyles />
-    //   <Main>
-    //     <Row type="vertical">
-    //       <div>
-    //         <Logo />
-    //         <Heading as="h1">dripWater</Heading>
-    //       </div>
-    //       <Heading as="h2">
-    //         gathering data <Span>some</Span> drips at a time
-    //       </Heading>
-    //     </Row>
-    //   </Main>
-    // </>
+    </QueryClientProvider>
   );
 }
 
