@@ -1,51 +1,57 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import { format } from 'date-fns';
-
+import PropTypes from 'prop-types';
+import Button from '../../ui/Button';
+import ButtonIcon from '../../ui/ButtonIcon';
+import { LuTrash } from 'react-icons/lu';
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { deleteReading } from '../../services/apiReadings';
 // import Table from '../../ui/Table';
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 1.8fr 2.2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 0.75fr 1fr 1fr;
+
   column-gap: 2.4rem;
   align-items: center;
-  padding: 1.4rem 2.4rem;
+  padding: 0.75rem 2.4rem;
 
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
   }
 `;
-const Img = styled.img`
-  display: block;
-  width: 6.4rem;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  object-position: center;
-  transform: scale(1.5) translateX(-7px);
-`;
 
 const StyledDate = styled.div`
   font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--color-grey-600);
-  font-family: 'Sono';
+  font-weight: 300;
+  color: var(--color-grey-500);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledReading = styled.div`
-  font-family: 'Sono';
-  font-weight: 600;
+  text-align: center;
+  font-weight: 800;
+  color: var(--color-blue-700);
 `;
 
 const StyledUse = styled.div`
-  font-family: 'Sono';
-  font-weight: 500;
-  color: var(--color-green-700);
+  text-align: center;
+
+  font-weight: 800;
+  color: var(--color-brand-800);
 `;
 const StyledDuration = styled.div`
-  font-family: 'Sono';
+  text-align: center;
+
   font-weight: 500;
-  color: var(--color-green-700);
+  color: var(--color-grey-500);
 `;
 
 function ReadingRow({ reading }) {
@@ -55,18 +61,55 @@ function ReadingRow({ reading }) {
     userId,
     readingAmount,
     usage,
-    duration,
+    duration: { years, days, hours, minutes },
     timeOfReading,
   } = reading;
 
+  const queryClient = useQueryClient();
+  const { isPending, mutate } = useMutation({
+    mutationFn: deleteReading,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['readings'] });
+    },
+    onError: (error) => alert(error.message),
+  });
+
+  let durationSting = '';
+  if (years) {
+    durationSting += Math.abs(years) + 'y, ';
+  }
+  if (days) {
+    durationSting += Math.abs(days) + 'd, ';
+  }
+  if (hours) {
+    durationSting += Math.abs(hours) + 'h, ';
+  }
+  if (minutes) {
+    durationSting += Math.abs(minutes) + 'm';
+  }
+
   return (
     <TableRow role="row">
-      <StyledDate>{format(new Date(timeOfReading), 'MMM dd yyyy')}</StyledDate>
-      <StyledReading>{readingAmount}</StyledReading>
+      <StyledDate>
+        {/* <span>{`w${format(new Date(timeOfReading), 'w')}`}</span> */}
+        <span>{`${format(new Date(timeOfReading), 'PPPP')}`}</span>
+        <span>{`${format(new Date(timeOfReading), 'p')}`}</span>
+
+        {/* format(new Date(timeOfReading), 'PPPPpp') */}
+      </StyledDate>
+      <StyledReading>{readingAmount?.toLocaleString()}</StyledReading>
       <StyledUse>{usage}</StyledUse>
-      <StyledDuration>{duration}</StyledDuration>
+      <StyledDuration>{durationSting}</StyledDuration>
+
+      <ButtonIcon disabled={isPending} onClick={() => mutate(readingId)}>
+        <LuTrash />
+      </ButtonIcon>
     </TableRow>
   );
 }
 
 export default ReadingRow;
+
+ReadingRow.propTypes = {
+  reading: PropTypes.object,
+};
