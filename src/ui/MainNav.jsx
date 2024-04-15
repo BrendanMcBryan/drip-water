@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { TbHomeCog } from 'react-icons/tb';
+// import { TbHomeCog } from 'react-icons/tb';
 import { LuDroplets, LuLayoutDashboard } from 'react-icons/lu';
 
 import { TbUsers } from 'react-icons/tb';
@@ -58,15 +58,15 @@ function MainNav() {
         <li>
           <StyledNavLink to="/dashboard">
             <LuLayoutDashboard />
-            <span>Dashboard</span>
+            <span>Home</span>
           </StyledNavLink>
         </li>
-        <li>
+        {/* <li>
           <StyledNavLink to="/household">
             <TbHomeCog />
             <span>Household</span>
           </StyledNavLink>
-        </li>
+        </li> */}
         <li>
           <StyledNavLink to="/readings">
             <LuDroplets />
