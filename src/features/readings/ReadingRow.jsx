@@ -11,6 +11,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { deleteReading } from '../../services/apiReadings';
+import toast from 'react-hot-toast';
 // import Table from '../../ui/Table';
 
 const TableRow = styled.div`
@@ -70,9 +71,10 @@ function ReadingRow({ reading }) {
   const { isPending, mutate } = useMutation({
     mutationFn: deleteReading,
     onSuccess: () => {
+      toast.success('Reading Succesfully Deleted');
       queryClient.invalidateQueries({ queryKey: ['readings'] });
     },
-    onError: (error) => alert(error.message),
+    onError: (error) => toast.error(error.message),
   });
 
   let durationSting = '';
