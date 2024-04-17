@@ -15,7 +15,7 @@ import { deleteReading } from '../../services/apiReadings';
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr 0.75fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 0.75fr 1fr 1fr 32px;
 
   column-gap: 2.4rem;
   align-items: center;
@@ -61,6 +61,7 @@ function ReadingRow({ reading }) {
     userId,
     readingAmount,
     usage,
+    useRate,
     duration: { years, days, hours, minutes },
     timeOfReading,
   } = reading;
@@ -92,7 +93,7 @@ function ReadingRow({ reading }) {
     <TableRow role="row">
       <StyledDate>
         {/* <span>{`w${format(new Date(timeOfReading), 'w')}`}</span> */}
-        <span>{`${format(new Date(timeOfReading), 'PPPP')}`}</span>
+        <span>{`${format(new Date(timeOfReading), 'PPP')}`}</span>
         <span>{`${format(new Date(timeOfReading), 'p')}`}</span>
 
         {/* format(new Date(timeOfReading), 'PPPPpp') */}
@@ -100,6 +101,7 @@ function ReadingRow({ reading }) {
       <StyledReading>{readingAmount?.toLocaleString()}</StyledReading>
       <StyledUse>{usage}</StyledUse>
       <StyledDuration>{durationSting}</StyledDuration>
+      <StyledUse>{useRate}</StyledUse>
 
       <ButtonIcon disabled={isPending} onClick={() => mutate(readingId)}>
         <LuTrash />

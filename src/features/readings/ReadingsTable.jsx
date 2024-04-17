@@ -16,7 +16,7 @@ const Table = styled.div`
 
 const TableHeader = styled.header`
   display: grid;
-  grid-template-columns: 2fr 1fr 0.75fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 0.75fr 1fr 1fr 32px;
 
   column-gap: 2.4rem;
   align-items: center;
@@ -53,6 +53,7 @@ function ReadingsTable() {
         <StyledTh>Reading</StyledTh>
         <StyledTh>Use</StyledTh>
         <StyledTh>Duration</StyledTh>
+        <StyledTh>Rate</StyledTh>
       </TableHeader>
       {readings.map((reading) => (
         <ReadingRow reading={reading} key={reading.id} />
