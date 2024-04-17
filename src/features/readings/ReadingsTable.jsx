@@ -13,6 +13,9 @@ const Table = styled.div`
   border-radius: 7px;
   overflow: hidden;
 `;
+const TableBody = styled.tbody`
+  display: block;
+`;
 
 const TableHeader = styled.header`
   display: grid;
@@ -53,11 +56,13 @@ function ReadingsTable() {
         <StyledTh>Reading</StyledTh>
         <StyledTh>Use</StyledTh>
         <StyledTh>Duration</StyledTh>
-        <StyledTh>Rate</StyledTh>
+        <StyledTh>/hour</StyledTh>
       </TableHeader>
-      {readings.map((reading) => (
-        <ReadingRow reading={reading} key={reading.id} />
-      ))}
+      <TableBody>
+        {readings.map((reading) => (
+          <ReadingRow reading={reading} key={reading.id} />
+        ))}
+      </TableBody>
     </Table>
   );
 }

@@ -13,18 +13,14 @@ export async function getReadings() {
     .select('*')
     .order('timeOfReading', { ascending: true });
 
-  // * add additinal data like usage and duration since last readings
-  let usage = '-';
-  let duration = 'na';
-  let durationHours = 0;
-  let useRate = '';
+  // * add additinal data like usage and duration since last readings, Also, use per hour
+  let usage, duration, durationHours, useRate;
 
   const readingsPlus = readings.map((reading, i) => {
-    // console.log(i);
     if (i === 0) {
       usage = '-';
-      duration = 'na';
-      useRate = '';
+      duration = '-';
+      useRate = '-';
       durationHours = 0;
     } else {
       usage = Math.abs(reading.readingAmount - readings[i - 1].readingAmount);
@@ -40,20 +36,10 @@ export async function getReadings() {
 
       useRate = (usage / durationHours).toFixed(2);
     }
-    console.log(
-      'user rate',
-      typeof useRate,
-      useRate,
-      'duration hours:',
-      typeof durationHours,
-      durationHours
-    );
 
     // * return readings with additional Data
     return { ...reading, usage, duration, useRate };
   });
-  // console.log('readings plus', readingsPlus);
-  // readings = { readings, ...newValues };
 
   if (error) {
     console.log(error);
