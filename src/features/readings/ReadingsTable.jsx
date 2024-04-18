@@ -13,7 +13,7 @@ const Table = styled.div`
   border-radius: 7px;
   overflow: hidden;
 `;
-const TableBody = styled.tbody`
+const TableBody = styled.div`
   display: block;
 `;
 

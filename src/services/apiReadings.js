@@ -50,12 +50,44 @@ export async function getReadings() {
   return readingsPlus.reverse();
 }
 
+// ? get just the latest reading
+export async function getLatestReading() {
+  let { data, error } = await supabase
+    .from('readings')
+    .select()
+    .order('timeOfReading', { ascending: false })
+    .limit(1);
+  // console.log('last reading', readings[0]);
+
+  if (error) {
+    console.log(error);
+    throw new Error('Latest reading could not be loaded');
+  }
+
+  // * return latest reading
+  // const latestReading = readings[0];
+  return data;
+}
 export async function deleteReading(id) {
   const { data, error } = await supabase.from('readings').delete().eq('id', id);
   if (error) {
     console.log(error);
 
     throw new Error('Reading could not be deleted');
+  }
+  return data;
+}
+
+export async function createReading(newReading) {
+  const userId = 'c1244b79-f199-49cd-814f-182eda771940';
+  const { data, error } = await supabase
+    .from('readings')
+    .insert([{ ...newReading, userId }])
+    .select();
+  if (error) {
+    console.log(error);
+
+    throw new Error('Reading could not be created');
   }
   return data;
 }
