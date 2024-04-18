@@ -4,6 +4,7 @@ import {
   differenceInMinutes,
   interval,
   intervalToDuration,
+  format,
 } from 'date-fns';
 import supabase from './supabase';
 
@@ -80,9 +81,12 @@ export async function deleteReading(id) {
 
 export async function createReading(newReading) {
   const userId = 'c1244b79-f199-49cd-814f-182eda771940';
+  // 2024-04-13 06:29:03+00
+  const timeOfReading = new Date(newReading.timeOfReading);
+  // console.log('new date >', typeof newDate, newDate);
   const { data, error } = await supabase
     .from('readings')
-    .insert([{ ...newReading, userId }])
+    .insert([{ ...newReading, userId, timeOfReading }])
     .select();
   if (error) {
     console.log(error);
