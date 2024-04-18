@@ -9,6 +9,7 @@ import Form from '../../ui/Form';
 import Button from '../../ui/Button';
 
 import FormRow from '../../ui/FormRow';
+import FormField from '../../ui/FormField';
 import { createReading, getLatestReading } from '../../services/apiReadings';
 import { format } from 'date-fns';
 import Spinner from '../../ui/Spinner';
@@ -63,35 +64,36 @@ function CreateReadingForm() {
   if (isPendingLatest) return <Spinner />;
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <FormRow label="Reading Amount">
-        <Input
-          type="number"
-          id="readingAmount"
-          defaultValue={latestReading[0].readingAmount}
-          {...register('readingAmount', {
-            required: 'this field is required',
-            validate: (value) =>
-              value > latestReading[0].readingAmount ||
-              `Must be larger than most recent reading (${latestReading[0].readingAmount})`,
-          })}
-        />
-      </FormRow>
-
-      <FormRow label="Time of reading">
-        <Input
-          type="datetime-local"
-          id="timeOfReading"
-          {...register('timeOfReading')}
-          value={todayAndNow}
-          // placeholder={TestDate}
-        />
-      </FormRow>
       <FormRow>
-        {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
-          Cancel
-        </Button>
-        <Button disabled={isCreating}> Add reading</Button>
+        <FormField label="Reading Amount">
+          <Input
+            type="number"
+            id="readingAmount"
+            defaultValue={latestReading[0].readingAmount}
+            {...register('readingAmount', {
+              required: 'this field is required',
+              validate: (value) =>
+                value > latestReading[0].readingAmount ||
+                `Must be larger than most recent reading (${latestReading[0].readingAmount})`,
+            })}
+          />
+        </FormField>
+        <FormField label="Time of reading">
+          <Input
+            type="datetime-local"
+            id="timeOfReading"
+            {...register('timeOfReading')}
+            value={todayAndNow}
+            // placeholder={TestDate}
+          />
+        </FormField>
+        <FormField>
+          {/* type is an HTML attribute! */}
+          <Button variation="secondary" type="reset">
+            Cancel
+          </Button>
+          <Button disabled={isCreating}> Add reading</Button>
+        </FormField>
       </FormRow>
     </Form>
   );
