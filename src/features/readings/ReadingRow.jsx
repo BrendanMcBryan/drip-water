@@ -1,17 +1,13 @@
 /* eslint-disable no-unused-vars */
 import styled from 'styled-components';
+import { LuTrash } from 'react-icons/lu';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
-import Button from '../../ui/Button';
+
+// import Button from '../../ui/Button';
 import ButtonIcon from '../../ui/ButtonIcon';
-import { LuTrash } from 'react-icons/lu';
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
-import { deleteReading } from '../../services/apiReadings';
-import toast from 'react-hot-toast';
+
+import { useDeleteReading } from './useDeletereading';
 // import Table from '../../ui/Table';
 
 const TableRow = styled.div`
@@ -56,8 +52,10 @@ const StyledDuration = styled.div`
 `;
 
 function ReadingRow({ reading }) {
+  const { isDeleting, deleteReading } = useDeleteReading();
   const {
     id: readingId,
+
     created_at,
     userId,
     readingAmount,
@@ -66,16 +64,6 @@ function ReadingRow({ reading }) {
     duration: { years, days, hours, minutes },
     timeOfReading,
   } = reading;
-
-  const queryClient = useQueryClient();
-  const { isPending, mutate } = useMutation({
-    mutationFn: deleteReading,
-    onSuccess: () => {
-      toast.success('Reading Succesfully Deleted');
-      queryClient.invalidateQueries({ queryKey: ['readings'] });
-    },
-    onError: (error) => toast.error(error.message),
-  });
 
   let durationSting = '';
   if (years) {
@@ -105,7 +93,10 @@ function ReadingRow({ reading }) {
       <StyledDuration>{durationSting}</StyledDuration>
       <StyledUse>{useRate}</StyledUse>
 
-      <ButtonIcon disabled={isPending} onClick={() => mutate(readingId)}>
+      <ButtonIcon
+        disabled={isDeleting}
+        onClick={() => deleteReading(readingId)}
+      >
         <LuTrash />
       </ButtonIcon>
     </TableRow>

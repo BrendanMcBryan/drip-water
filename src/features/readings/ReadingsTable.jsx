@@ -5,6 +5,7 @@ import { getReadings } from '../../services/apiReadings';
 
 import Spinner from '../../ui/Spinner';
 import ReadingRow from './ReadingRow';
+import { useReadings } from './useReadings';
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -38,16 +39,9 @@ const StyledTh = styled.div`
 `;
 
 function ReadingsTable() {
-  const {
-    isPending,
-    data: readings,
-    error,
-  } = useQuery({
-    queryKey: ['readings'],
-    queryFn: getReadings,
-  });
+  const { isPendingReadings, readings, error } = useReadings();
 
-  if (isPending) return <Spinner />;
+  if (isPendingReadings) return <Spinner />;
 
   return (
     <Table role="table">

@@ -1,89 +1,69 @@
-/* eslint-disable no-unused-vars */
-import toast from 'react-hot-toast';
-
 import { useForm } from 'react-hook-form';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { format } from 'date-fns';
 
 import Input from '../../ui/Input';
 import Form from '../../ui/Form';
 import Button from '../../ui/Button';
-
 import FormRow from '../../ui/FormRow';
 import FormField from '../../ui/FormField';
-import { createReading, getLatestReading } from '../../services/apiReadings';
-import { format } from 'date-fns';
 import Spinner from '../../ui/Spinner';
 
+import { useCreateReading } from './useCreateReading';
+import { useReadings } from './useReadings';
+
 function CreateReadingForm() {
+  // eslint-disable-next-line no-unused-vars
   const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { errors } = formState;
 
-  const todayAndNow = format(new Date(), "yyyy-MM-dd'T'hh:mm");
-  console.log(todayAndNow);
-  // const dateControl = document.querySelector('input[type="datetime-local"]');
-  // dateControl.value = todayAndNow;
+  const { isCreating, createReading } = useCreateReading();
+  const { isPendingReadings, readings } = useReadings();
 
-  const {
-    isPending: isPendingLatest,
-    data: latestReading,
-    error,
-  } = useQuery({
-    queryKey: ['latestReading'],
-    queryFn: getLatestReading,
-  });
+  // console.log('readings >', readings[0].readingAmount);
 
-  // console.log('>latest', latestReading);
-
-  // const TestDate = format(new Date(), 'MM/dd/yyyy, hh:mm aa');
-
-  // console.log(TestDate);
-  const queryClient = useQueryClient();
-
-  // const { errors } = formState;
-
-  // console.log(errors);
-
-  const { mutate, isPending: isCreating } = useMutation({
-    mutationFn: createReading,
-    onSuccess: () => {
-      toast.success('New Reading added');
-      queryClient.invalidateQueries({ queryKey: ['readings'] });
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  let todayAndNow = format(new Date(), "yyyy-MM-dd'T'HH:mm");
 
   function onSubmit(data) {
-    mutate(data);
-    console.log(data);
+    //* send reset function as option to mutation function
+    createReading(data, { onSuccess: () => reset() });
   }
 
+  // eslint-disable-next-line no-unused-vars
   function onError(errors) {
-    console.log('red', errors);
+    // console.log('red', errors);
+    // toast.error(errors);
   }
 
-  if (isPendingLatest) return <Spinner />;
+  if (isPendingReadings) return <Spinner />;
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <FormRow>
-        <FormField label="Reading Amount">
+      <FormRow error={errors?.readingAmount?.message}>
+        <FormField
+          label="Reading Amount"
+          error={errors?.readingAmount?.message}
+        >
           <Input
+            disabled={isCreating}
             type="number"
             id="readingAmount"
-            defaultValue={latestReading[0].readingAmount}
+            defaultValue={readings[0].readingAmount}
             {...register('readingAmount', {
-              required: 'this field is required',
+              required: 'Amount is required',
               validate: (value) =>
-                value > latestReading[0].readingAmount ||
-                `Must be larger than most recent reading (${latestReading[0].readingAmount})`,
+                value > readings[0].readingAmount ||
+                `Reading must be larger than most recent reading (${readings[0].readingAmount.toLocaleString()})`,
             })}
           />
         </FormField>
         <FormField label="Time of reading">
           <Input
+            disabled={isCreating}
             type="datetime-local"
             id="timeOfReading"
-            {...register('timeOfReading')}
-            value={todayAndNow}
+            {...register('timeOfReading', {
+              required: 'Date and Time are required',
+            })}
+            defaultValue={todayAndNow}
             // placeholder={TestDate}
           />
         </FormField>
