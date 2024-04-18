@@ -6,6 +6,7 @@ import { getReadings } from '../../services/apiReadings';
 import Spinner from '../../ui/Spinner';
 import ReadingRow from './ReadingRow';
 import { useReadings } from './useReadings';
+import { useCurrentUser } from '../user/useCurrentUser';
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -40,7 +41,8 @@ const StyledTh = styled.div`
 
 function ReadingsTable() {
   const { isPendingReadings, readings, error } = useReadings();
-
+  const { isPendingUser, user } = useCurrentUser();
+  console.log(user);
   if (isPendingReadings) return <Spinner />;
 
   return (

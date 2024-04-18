@@ -16,6 +16,7 @@ import Users from './pages/Users';
 import PageNotFound from './pages/PageNotFound';
 import AppLayout from './ui/AppLayout';
 import { Toaster } from 'react-hot-toast';
+import { useCurrentUser } from './features/user/useCurrentUser';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,6 +41,8 @@ const Span = styled.span`
 `;
 
 function App() {
+  // const { isPendingUser, user, error } = useCurrentUser();
+  // console.log(user);
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
