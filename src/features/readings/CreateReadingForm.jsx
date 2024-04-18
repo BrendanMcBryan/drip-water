@@ -16,6 +16,11 @@ import Spinner from '../../ui/Spinner';
 function CreateReadingForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
 
+  const todayAndNow = format(new Date(), "yyyy-MM-dd'T'hh:mm");
+  console.log(todayAndNow);
+  // const dateControl = document.querySelector('input[type="datetime-local"]');
+  // dateControl.value = todayAndNow;
+
   const {
     isPending: isPendingLatest,
     data: latestReading,
@@ -77,7 +82,7 @@ function CreateReadingForm() {
           type="datetime-local"
           id="timeOfReading"
           {...register('timeOfReading')}
-          // defaultValue={TestDate}
+          value={todayAndNow}
           // placeholder={TestDate}
         />
       </FormRow>
