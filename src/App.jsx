@@ -17,6 +17,7 @@ import PageNotFound from './pages/PageNotFound';
 import AppLayout from './ui/AppLayout';
 import { Toaster } from 'react-hot-toast';
 import { useCurrentUser } from './features/user/useCurrentUser';
+import Profile from './pages/Profile';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,7 +57,7 @@ function App() {
             <Route path="household" element={<Household />} />
             <Route path="readings" element={<Readings />} />
             <Route path="settings" element={<Settings />} />
-            <Route path="users" element={<Users />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
 
           <Route path="login" element={<Login />} />

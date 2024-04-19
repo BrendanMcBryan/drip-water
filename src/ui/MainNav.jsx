@@ -74,9 +74,9 @@ function MainNav() {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/users">
+          <StyledNavLink to="/profile">
             <TbUsers />
-            <span>Users</span>
+            <span>Profile</span>
           </StyledNavLink>
         </li>
         <li>

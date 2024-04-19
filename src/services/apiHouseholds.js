@@ -25,3 +25,16 @@ export async function updateHousehold(newHouseholdSetting) {
   }
   return data;
 }
+
+export async function getProfileHousehold(profileHouseholdId) {
+  let { data, error } = await supabase
+    .from('households')
+    .select('*')
+    .eq('id', profileHouseholdId)
+    .single();
+  if (error) {
+    console.error(error);
+    throw new Error('Household setting could not be updated');
+  }
+  return data;
+}

@@ -3,11 +3,9 @@ import Row from '../ui/Row';
 
 function Reading() {
   return (
-    <>
-      <Row type="horizontal">
-        <Heading as="h1">Reading</Heading>
-      </Row>
-    </>
+    <Row type="horizontal">
+      <Heading as="h1">Reading</Heading>
+    </Row>
   );
 }
 

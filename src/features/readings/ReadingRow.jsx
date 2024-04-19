@@ -8,6 +8,10 @@ import PropTypes from 'prop-types';
 import ButtonIcon from '../../ui/ButtonIcon';
 
 import { useDeleteReading } from './useDeletereading';
+import Modal from '../../ui/Modal';
+import Menus from '../../ui/Menus';
+import { HiPencil, HiSquare2Stack } from 'react-icons/hi2';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 // import Table from '../../ui/Table';
 
 const TableRow = styled.div`
@@ -92,13 +96,48 @@ function ReadingRow({ reading }) {
       <StyledUse>{usage}</StyledUse>
       <StyledDuration>{durationSting}</StyledDuration>
       <StyledUse>{useRate}</StyledUse>
+      <div>
+        <Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={readingId} />
 
-      <ButtonIcon
+            <Menus.List id={readingId}>
+              <Menus.Button
+                icon={<HiSquare2Stack />}
+                // onClick={handleDuplicate}
+                // disabled={isCreating}
+              >
+                Duplicate
+              </Menus.Button>
+              <Modal.Open opens="edit">
+                <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+              </Modal.Open>
+
+              <Modal.Open opens="delete">
+                <Menus.Button icon={<LuTrash />}>Delete</Menus.Button>
+              </Modal.Open>
+            </Menus.List>
+
+            <Modal.Window name="edit">
+              {/* <CreateCabinForm cabinToEdit={cabin} /> */}
+            </Modal.Window>
+
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resourceName="Reading"
+                disabled={isDeleting}
+                onConfirm={() => deleteReading(readingId)}
+              />
+            </Modal.Window>
+          </Menus.Menu>
+        </Modal>
+      </div>
+      {/* <ButtonIcon
         disabled={isDeleting}
         onClick={() => deleteReading(readingId)}
       >
         <LuTrash />
-      </ButtonIcon>
+      </ButtonIcon> */}
     </TableRow>
   );
 }

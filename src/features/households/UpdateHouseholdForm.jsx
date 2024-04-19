@@ -51,7 +51,7 @@ function UpdateHouseholdForm() {
           <Input
             type="number"
             id="serviceCharge"
-            defaultValue={serviceProvider}
+            defaultValue={serviceCharge}
             disabled={isEditing}
             onBlur={(e) => handleUpdate(e, 'serviceCharge')}
           />

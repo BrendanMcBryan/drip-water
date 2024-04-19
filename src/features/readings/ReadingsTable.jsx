@@ -7,6 +7,7 @@ import Spinner from '../../ui/Spinner';
 import ReadingRow from './ReadingRow';
 import { useReadings } from './useReadings';
 import { useCurrentUser } from '../user/useCurrentUser';
+import Menus from '../../ui/Menus';
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -46,20 +47,22 @@ function ReadingsTable() {
   if (isPendingReadings) return <Spinner />;
 
   return (
-    <Table role="table">
-      <TableHeader role="row">
-        <div>Date</div>
-        <StyledTh>Reading</StyledTh>
-        <StyledTh>Use</StyledTh>
-        <StyledTh>Duration</StyledTh>
-        <StyledTh>/hour</StyledTh>
-      </TableHeader>
-      <TableBody>
-        {readings.map((reading) => (
-          <ReadingRow reading={reading} key={reading.id} />
-        ))}
-      </TableBody>
-    </Table>
+    <Menus>
+      <Table role="table">
+        <TableHeader role="row">
+          <div>Date</div>
+          <StyledTh>Reading</StyledTh>
+          <StyledTh>Use</StyledTh>
+          <StyledTh>Duration</StyledTh>
+          <StyledTh>/hour</StyledTh>
+        </TableHeader>
+        <TableBody>
+          {readings.map((reading) => (
+            <ReadingRow reading={reading} key={reading.id} />
+          ))}
+        </TableBody>
+      </Table>
+    </Menus>
   );
 }
 

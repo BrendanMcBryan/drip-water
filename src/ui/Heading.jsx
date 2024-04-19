@@ -33,9 +33,17 @@ const Heading = styled.h1`
       text-align: right;
       color: var(--color-blue-700);
     `}
+  ${(props) =>
+    props.as === 'h6' &&
+    css`
+      font-size: 0.75;
+      font-weight: 700;
+
+      color: var(--color-brand-700);
+    `}
 
 
-    text-align: center;
+    /* text-align: center; */
   line-height: 1.4;
 `;
 
