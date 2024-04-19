@@ -42,7 +42,7 @@ const StyledTh = styled.div`
 function ReadingsTable() {
   const { isPendingReadings, readings, error } = useReadings();
   const { isPendingUser, user } = useCurrentUser();
-  console.log(user);
+  // console.log(user);
   if (isPendingReadings) return <Spinner />;
 
   return (
