@@ -6,7 +6,7 @@ import { getReadings } from '../../services/apiReadings';
 import Spinner from '../../ui/Spinner';
 import ReadingRow from './ReadingRow';
 import { useReadings } from './useReadings';
-import { useCurrentUser } from '../user/useCurrentUser';
+// import { useCurrentUser } from '../user/useCurrentUser';
 import Menus from '../../ui/Menus';
 
 const Table = styled.div`
@@ -42,7 +42,7 @@ const StyledTh = styled.div`
 
 function ReadingsTable() {
   const { isPendingReadings, readings, error } = useReadings();
-  const { isPendingUser, user } = useCurrentUser();
+  // const { isPendingUser, user } = useCurrentUser();
   // console.log(user);
   if (isPendingReadings) return <Spinner />;
 

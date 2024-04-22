@@ -16,7 +16,7 @@ import Users from './pages/Users';
 import PageNotFound from './pages/PageNotFound';
 import AppLayout from './ui/AppLayout';
 import { Toaster } from 'react-hot-toast';
-import { useCurrentUser } from './features/user/useCurrentUser';
+// import { useCurrentUser } from './features/user/useCurrentUser';
 import Profile from './pages/Profile';
 
 const queryClient = new QueryClient({
@@ -77,8 +77,9 @@ function App() {
               fontSize: '16px',
               maxWidth: '500px',
               padding: '16px 24px',
-              backgroundColor: 'var(--color-grey-0)',
+              backgroundColor: 'var(--color-blue-100)',
               color: 'var(--color-grey-700)',
+              border: '1px solid white',
             },
           }}
         />
